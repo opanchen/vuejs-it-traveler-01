@@ -1,5 +1,6 @@
 <script setup>
 import { defineProps, computed } from 'vue'
+import { RouterLink } from 'vue-router'
 
 const props = defineProps({
   variant: {
@@ -8,8 +9,13 @@ const props = defineProps({
     validator: (value) => {
       return ['primary', 'gradient', 'outlined'].includes(value)
     }
-  }
+  },
+  to: String
 })
+
+const isLink = computed(() => !!props.to)
+const componentName = computed(() => (isLink.value ? RouterLink : 'button'))
+const path = computed(() => (isLink.value ? props.to : undefined))
 
 const bgStyles = computed(() => {
   return props.variant === 'gradient'
@@ -22,10 +28,15 @@ const bgStyles = computed(() => {
 </script>
 
 <template>
-  <button class="rounded-xl py-3 px-10 text-white font-bold -tracking-wider" :class="bgStyles">
+  <component
+    :is="componentName"
+    :to="path"
+    class="rounded-xl py-3 px-10 text-white font-bold -tracking-wider"
+    :class="bgStyles"
+  >
     <!-- <div v-if="$slots.default">Hello default slot</div> -->
     <slot>Default button</slot>
-  </button>
+  </component>
 </template>
 
 <!-- <style scoped>

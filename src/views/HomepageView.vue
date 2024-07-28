@@ -1,26 +1,65 @@
 <script setup>
-import IButton from '../components/IButton/IButton.vue'
+import { ref } from 'vue'
+import { MapboxMap, MapboxMarker } from '@studiometa/vue-mapbox-gl'
+import 'mapbox-gl/dist/mapbox-gl.css'
+
+import { mapSettings } from '@/map/settings'
+
+import FavoritePlaces from '@/components/FavoritePlaces/FavoritePlaces.vue'
+import MarkerIcon from '@/components/icons/MarkerIcon.vue'
+
+const favoritePlaces = [
+  {
+    id: 1,
+    title: 'New place 1',
+    description: 'Super description 1',
+    img: '',
+    lngLat: [30.523333, 50.490001]
+  },
+  {
+    id: 2,
+    title: 'New place 2',
+    description: 'Super description 2',
+    img: '',
+    lngLat: [30.523333, 50.450001]
+  }
+]
+
+const activeId = ref(null)
+const map = ref(null)
+
+const changeActiveId = (id) => {
+  activeId.value = id
+}
+
+const changePlace = (id) => {
+  const { lngLat } = favoritePlaces.find((place) => place.id === id)
+  changeActiveId(id)
+  map.value.flyTo({ center: lngLat })
+}
 </script>
 
 <template>
-  <main class="flex h-screen outline-dashed">
-    <section class="flex-1 flex justify-center items-center px-5 bg-primary">
-      <div class="text-white text-center">
-        <img class="inline mb-6" src="../assets/images/map-pin.svg" />
+  <main class="flex h-screen">
+    <div class="bg-white h-full w-[400px] shrink-0 overflow-auto pb-10">
+      <FavoritePlaces :items="favoritePlaces" :active-id="activeId" @place-clicked="changePlace" />
+    </div>
 
-        <h1 class="font-bolt text-4xl mb-7">IT Traveler</h1>
-
-        <p class="leading-6 mb-11">
-          Простий і зручний веб додаток, який дозволить тобі відмічати твої улюблені місця, а також
-          ті, в яких би ти дуже хотів побувати. Тож не зволікай і спробуй сам.
-        </p>
-
-        <IButton>Почати роботу</IButton>
-      </div>
-    </section>
-
-    <section class="flex-1">
-      <img class="h-full w-full object-cover" src="../assets/images/static-map.png" alt="" />
-    </section>
+    <div class="w-full h-full flex items-center justify-center text-6xl">
+      <MapboxMap
+        :center="[30.523333, 50.450001]"
+        :zoom="10"
+        :access-token="mapSettings.apiToken"
+        :map-style="mapSettings.style"
+        @mb-created="(mapInstance) => (map = mapInstance)"
+        class="w-full h-full"
+      >
+        <MapboxMarker v-for="place in favoritePlaces" :key="place.id" :lngLat="place.lngLat">
+          <button class="" @click="changeActiveId(place.id)">
+            <MarkerIcon class="h-8 w-8" />
+          </button>
+        </MapboxMarker>
+      </MapboxMap>
+    </div>
   </main>
 </template>
