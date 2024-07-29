@@ -17,12 +17,14 @@ const emit = defineEmits(['place-clicked'])
 </script>
 
 <template>
-  <div class="px-6">
+  <div class="px-6 text-black">
     <div class="text-gray mb-4">Додані маркери</div>
 
     <slot name="label"></slot>
 
     <slot name="list">
+      <p v-if="items.length === 0">Список порожній</p>
+
       <FavoritePlace
         v-for="place in props.items"
         :key="place.id"

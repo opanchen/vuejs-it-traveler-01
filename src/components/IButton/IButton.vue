@@ -10,7 +10,11 @@ const props = defineProps({
       return ['primary', 'gradient', 'outlined'].includes(value)
     }
   },
-  to: String
+  to: String,
+  isLoading: {
+    default: false,
+    type: Boolean
+  }
 })
 
 const isLink = computed(() => !!props.to)
@@ -34,8 +38,12 @@ const bgStyles = computed(() => {
     class="rounded-xl py-3 px-10 text-white font-bold -tracking-wider"
     :class="bgStyles"
   >
-    <!-- <div v-if="$slots.default">Hello default slot</div> -->
-    <slot>Default button</slot>
+    <template v-if="props.isLoading"> Loading... </template>
+
+    <template v-else>
+      <!-- <div v-if="$slots.default">Hello default slot</div> -->
+      <slot>Default button</slot>
+    </template>
   </component>
 </template>
 
