@@ -3,17 +3,22 @@ import { clientFetch } from '@/api/clientFetch'
 const BASE_PLACES_URL = '/points'
 
 export const getFavoritePlaces = () => {
-  return clientFetch.get(BASE_PLACES_URL)
+  return clientFetch.get(BASE_PLACES_URL).then(({ data }) =>
+    data.map((place) => ({
+      ...place,
+      id: place._id
+    }))
+  )
 }
 
-export const addFavoritePlaces = (body) => {
+export const addFavoritePlace = (body) => {
   return clientFetch.post(BASE_PLACES_URL, body)
 }
 
-export const updateFavoritePlaces = (body) => {
+export const updateFavoritePlace = (body) => {
   return clientFetch.put(BASE_PLACES_URL, body)
 }
 
-export const deleteFavoritePlaces = (body) => {
+export const deleteFavoritePlace = (body) => {
   return clientFetch.put(BASE_PLACES_URL, body)
 }
