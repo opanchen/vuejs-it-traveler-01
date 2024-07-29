@@ -1,7 +1,7 @@
 <script setup>
-import FavoritePlaceIconButton from '@/components/FavoritePlaceIconButton.vue'
-import DeleteIcon from '@/components/DeleteIcon.vue'
-import EditIcon from '@/components/EditIcon.vue'
+import FavoritePlaceIconButton from '@/components/FavoritePlace/FavoritePlaceIconButton.vue'
+import DeleteIcon from '@/components/FavoritePlace/DeleteIcon.vue'
+import EditIcon from '@/components/FavoritePlace/EditIcon.vue'
 
 import fallbackImage from '../../assets/images/ukraine.png'
 
@@ -38,7 +38,7 @@ const emit = defineEmits(['edit', 'delete'])
               <EditIcon />
             </FavoritePlaceIconButton>
 
-            <FavoritePlaceIconButton @click="emit('delete')">
+            <FavoritePlaceIconButton @click.stop="emit('delete')">
               <DeleteIcon />
             </FavoritePlaceIconButton>
           </div>
