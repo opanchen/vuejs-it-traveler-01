@@ -13,6 +13,8 @@ import { useMutation } from '@/composables/useMutation'
 import FavoritePlaces from '@/components/FavoritePlaces/FavoritePlaces.vue'
 import MarkerIcon from '@/components/icons/MarkerIcon.vue'
 import CreateNewPlaceModal from '@/components/CreateNewPlaceModal/CreateNewPlaceModal.vue'
+import UserInfo from '@/components/UserInfo/UserInfo.vue'
+import LogoutButton from '@/components/LogoutButton/LogoutButton.vue'
 
 // const favoritePlaces = ref([])
 const activeId = ref(null)
@@ -78,6 +80,8 @@ onMounted(() => {
 <template>
   <main class="flex h-screen">
     <div class="bg-white h-full w-[400px] shrink-0 overflow-auto pb-10">
+      <UserInfo />
+
       <FavoritePlaces
         :items="favoritePlaces"
         :active-id="activeId"
@@ -87,6 +91,8 @@ onMounted(() => {
         @create="openModal"
         @updated="getPlaces"
       />
+
+      <LogoutButton class="mt-10" />
 
       <CreateNewPlaceModal
         :is-open="isOpen"
