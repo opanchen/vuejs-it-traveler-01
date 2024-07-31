@@ -84,7 +84,7 @@ const handleDeletePlace = () => {
 </script>
 
 <template>
-  <div class="px-6 text-black">
+  <div class="px-6 text-black grow flex flex-col">
     <div class="text-gray mb-4">Додані маркери</div>
 
     <slot name="label"></slot>

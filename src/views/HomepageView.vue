@@ -79,7 +79,7 @@ onMounted(() => {
 
 <template>
   <main class="flex h-screen">
-    <div class="bg-white h-full w-[400px] shrink-0 overflow-auto pb-10">
+    <div class="bg-white h-full w-[400px] shrink-0 overflow-auto pb-10 flex flex-col">
       <UserInfo />
 
       <FavoritePlaces
@@ -92,7 +92,7 @@ onMounted(() => {
         @updated="getPlaces"
       />
 
-      <LogoutButton class="mt-10" />
+      <LogoutButton class="mt-auto" />
 
       <CreateNewPlaceModal
         :is-open="isOpen"
