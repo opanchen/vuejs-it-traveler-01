@@ -24,7 +24,7 @@ const routes = [
 ]
 
 export const router = createRouter({
-  history: createWebHistory(),
+  history: createWebHistory('/vuejs-it-traveler-01/'),
   routes
 })
 
