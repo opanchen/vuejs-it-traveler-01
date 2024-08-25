@@ -46,10 +46,14 @@ class AuthService {
   }
 
   async refresh() {
-    const { data } = await clientFetch.get('/user/refresh')
-    const { accessToken } = data
+    try {
+      const { data } = await clientFetch.get('/user/refresh')
+      const { accessToken } = data
 
-    this.setToken(accessToken)
+      this.setToken(accessToken)
+    } catch (er) {
+      this.clearToken()
+    }
   }
 }
 
