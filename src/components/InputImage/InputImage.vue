@@ -9,7 +9,11 @@ const errorMessage = ref('')
 const handleUploadImg = async (event) => {
   const file = event.target.files[0]
 
-  if (file.size > 3 * 1024 * 1024) {
+  if (
+    // file.size > 3 * 1024 * 1024 // 3MB as example
+    file.size > 100 // 100 kb because of backend issues
+
+  ) {
     errorMessage.value = 'Завеликий файл'
     return
   }
